@@ -8,7 +8,7 @@ contract MiniSwap {
 
     using SafeMath for uint256;
     
-    address public token;   // address of the IERC20 token traded
+    address public token;   // address of the ERC20 token traded
 
     uint256 public totalSupply;
     mapping(address => uint) public balances;
