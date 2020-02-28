@@ -6,7 +6,7 @@ import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 
 contract MiniSwap {
 
-	using SafeMath for uint256;
+    using SafeMath for uint256;
     
     address public token;   // address of the IERC20 token traded
 
