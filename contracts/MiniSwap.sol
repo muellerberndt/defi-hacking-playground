@@ -3,14 +3,15 @@ pragma solidity ^0.5.0;
 import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 
+import './MiniSwapExchangeInterface.sol';
 
-contract MiniSwap {
+contract MiniSwap is MiniSwapExchangeInterface {
 
     using SafeMath for uint256;
     
     address public token;   // address of the IERC20 token traded
 
-    uint256 public totalSupply;
+    uint256 private _totalSupply;
     mapping(address => uint) public balances;
 
     constructor(address token_addr) public {
@@ -27,7 +28,7 @@ contract MiniSwap {
     function addLiquidity(uint256 min_liquidity, uint256 max_tokens) public payable returns (uint256) {
         require(max_tokens > 0 && msg.value > 0);
         
-        uint256 total_liquidity = totalSupply;
+        uint256 total_liquidity = _totalSupply;
         
         if (total_liquidity > 0) {
             require(min_liquidity > 0);
@@ -44,7 +45,7 @@ contract MiniSwap {
             require(msg.value >= 1000000000);
             uint256 token_amount = max_tokens;
             uint256 initial_liquidity = address(this).balance;
-            totalSupply = initial_liquidity;
+            _totalSupply = initial_liquidity;
             balances[msg.sender] = initial_liquidity;
             require(IERC20(token).transferFrom(msg.sender, address(this), token_amount));
             return initial_liquidity;
@@ -61,14 +62,14 @@ contract MiniSwap {
     */
 
     function removeLiquidity(uint256 amount, uint256 min_eth, uint256 min_tokens) public returns (uint256, uint256) {
-        uint256 total_liquidity = totalSupply;
+        uint256 total_liquidity = _totalSupply;
         require(total_liquidity > 0);
         uint256 token_reserve = IERC20(token).balanceOf(address(this));
         uint256 eth_amount = amount.mul(address(this).balance).div(total_liquidity);
         uint256 token_amount = amount.mul(token_reserve).div(total_liquidity);
         require(eth_amount >= min_eth && token_amount >= min_tokens);
         balances[msg.sender].sub(amount);
-        totalSupply = total_liquidity.sub(amount);
+        _totalSupply = total_liquidity.sub(amount);
         msg.sender.transfer(eth_amount);
         require(IERC20(token).transfer(msg.sender, token_amount));
         return (eth_amount, token_amount);
@@ -239,6 +240,10 @@ contract MiniSwap {
     
     function tokenAddress() public view returns (address) {
         return token;
+    }
+
+    function totalSupply() public view returns (uint256) {
+        return _totalSupply;
     }
         
     /* 
