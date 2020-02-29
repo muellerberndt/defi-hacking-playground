@@ -3,13 +3,14 @@ pragma solidity ^0.5.0;
 import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 
-import './MiniSwapExchangeInterface.sol';
+import './IMiniSwapExchange.sol';
 
-contract MiniSwap is MiniSwapExchangeInterface {
+contract MiniSwapExchange is IMiniSwapExchange {
 
     using SafeMath for uint256;
     
-    address public token;   // address of the IERC20 token traded
+    address public token_address;   // address of the IERC20 token traded
+    address token;
 
     uint256 private _totalSupply;
     mapping(address => uint) public balances;

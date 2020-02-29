@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-contract MiniSwapExchangeInterface {
+contract IMiniSwapExchange {
     // Address of ERC20 token sold on this exchange
     function tokenAddress() external view returns (address token);
     // Provide Liquidity
