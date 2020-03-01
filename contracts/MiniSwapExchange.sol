@@ -11,6 +11,7 @@ contract MiniSwapExchange is IMiniSwapExchange {
     
     address public token_address;   // address of the IERC20 token traded
     address token;
+    address public token;   // address of the ERC20 token traded
 
     uint256 private _totalSupply;
     mapping(address => uint) public balances;
