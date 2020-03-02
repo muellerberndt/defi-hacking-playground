@@ -10,7 +10,6 @@ contract MiniSwapExchange is IMiniSwapExchange {
     using SafeMath for uint256;
     
     address public token_address;   // address of the IERC20 token traded
-    address token;
     address public token;   // address of the ERC20 token traded
 
     uint256 private _totalSupply;
