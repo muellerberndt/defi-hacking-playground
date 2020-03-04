@@ -96,7 +96,7 @@ contract MiniSwapExchange {
     function getOutputPrice(uint256 output_amount, uint256 input_reserve, uint256 output_reserve) private pure returns (uint256) {
         require(input_reserve > 0 && output_reserve > 0);
         uint256 numerator = input_reserve.mul(output_amount).mul(1000);
-        uint256 denominator = (output_reserve - output_amount).mul(997);
+        uint256 denominator = (output_reserve.sub(output_amount)).mul(997);
         return numerator.div(denominator);
     }
 
@@ -262,3 +262,4 @@ contract MiniSwapExchange {
     }
     
 }
+
