@@ -4,6 +4,22 @@ import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import './IMiniSwapExchange.sol';
 
+
+contract MiniSwapFactory {
+
+  address[] public exchanges;
+
+  // deploy a new contract
+
+  function deploy(address _token) public returns(address)
+  {
+    address exchange = address(new MiniSwapExchange(_token));
+    exchanges.push(exchange);
+    return exchange;
+  }
+}
+
+
 contract MiniSwapExchange is IMiniSwapExchange {
 
     using SafeMath for uint256;
