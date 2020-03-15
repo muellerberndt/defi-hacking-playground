@@ -2,14 +2,14 @@ const JesusCoin = artifacts.require('JesusCoin');
 const MiniSwapExchange = artifacts.require('MiniSwapExchange');
 const DefiLoans = artifacts.require('DefiLoans');
 
-module.exports = async function (deployer, network) {
+module.exports = function(deployer) {
 
-    await deployer.deploy(JesusCoin);
-    const token = await JesusCoin.deployed();
-
-    await deployer.deploy(MiniSwapExchange(token.address));
-    const exchange = await MiniSwapExchange.deployed();
-
-    deployer.deploy(DefiLoans(token.address, exchange.address));
-
-};
+    // Deploy the Storage contract
+    deployer.deploy(JesusCoin)
+        // Wait until the storage contract is deployed
+        .then(() => JesusCoin.deployed())
+        // Deploy the InfoManager contract, while passing the address of the
+        // Storage contract
+        .then(() => deployer.deploy(MiniSwapExchange, JesusCoin.address))
+        .then(() => deployer.deploy(DefiLoans, MiniSwapExchange.address, JesusCoin.address))
+}
