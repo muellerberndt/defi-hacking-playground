@@ -7,6 +7,8 @@ import './IMiniSwapExchange.sol';
 
 contract MiniSwapFactory {
 
+  event ExchangeCreated(address addr);
+
   address[] public exchanges;
 
   // deploy a new contract
@@ -15,6 +17,7 @@ contract MiniSwapFactory {
   {
     address exchange = address(new MiniSwapExchange(_token));
     exchanges.push(exchange);
+    emit ExchangeCreated(exchange);
     return exchange;
   }
 }
