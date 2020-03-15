@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/b-mueller/defi-hacking-playground#readme",
   "dependencies": {
-    "openzeppelin-solidity": "2.5.0"
+    "openzeppelin-solidity": "2.5.0",
+    "truffle": "^5.1.17"
   }
 }
