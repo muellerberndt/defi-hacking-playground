@@ -23,10 +23,10 @@ contract MiniSwapExchange is IMiniSwapExchange {
     }
     
     /*
-    # @notice Deposit ETH and Tokens (self.token) at current ratio to mint UNI tokens.
-    # @dev min_liquidity does nothing when total UNI supply is 0.
-    # @param min_liquidity Minimum number of UNI sender will mint if total UNI supply is greater than 0.
-    # @param max_tokens Maximum number of tokens deposited. Deposits max amount if total UNI supply is 0.
+    # @notice Deposit ETH and Tokens (self.token) at current ratio to mint MINI tokens.
+    # @dev min_liquidity does nothing when total MINI supply is 0.
+    # @param min_liquidity Minimum number of MINI sender will mint if total MINI supply is greater than 0.
+    # @param max_tokens Maximum number of tokens deposited. Deposits max amount if total MINI supply is 0.
     */
 
     function addLiquidity(uint256 min_liquidity, uint256 max_tokens) external payable returns (uint256) {
@@ -57,8 +57,8 @@ contract MiniSwapExchange is IMiniSwapExchange {
     }
 
     /*
-    # @dev Burn UNI tokens to withdraw ETH and Tokens at current ratio.
-    # @param amount Amount of UNI burned.
+    # @dev Burn MINI tokens to withdraw ETH and Tokens at current ratio.
+    # @param amount Amount of MINI burned.
     # @param min_eth Minimum ETH withdrawn.
     # @param min_tokens Minimum Tokens withdrawn.
     # @param deadline Time after which this transaction can no longer be executed.
