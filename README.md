@@ -4,7 +4,7 @@ This is a collection of DeFi legos that can be used to build test scenarios for 
 
 ## All the legos
 
-- [JesusCoin ETC20 token](contracts/JesusCoin.sol)
+- [JesusCoin ERC20 token](contracts/JesusCoin.sol)
 - [MiniSwap: ETH/token exchange that uses the constant product pricing model](contracts/MiniSwapExchange.sol)
   - [Interface](contracts/IMiniSwapExchange.sol)
 - [DefiLoan: Broken zero-interest collaterlised loans](contracts/DefiLoans.sol)
