@@ -62,6 +62,7 @@ typings/
 
 # Compiled directories
 build/
+bin/
 
 # Dependency directories
 node_modules/
