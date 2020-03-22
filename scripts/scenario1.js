@@ -1,6 +1,5 @@
-const MiniSwapFactory = artifacts.require('MiniSwapFactory')
-const MiniSwapExchange = artifacts.require('MiniSwapExchange')
 const JesusCoin = artifacts.require('JesusCoin')
+const MiniSwapExchange = artifacts.require('MiniSwapExchange')
 
 module.exports = async function(callback) {
 
