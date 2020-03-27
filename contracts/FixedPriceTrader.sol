@@ -4,8 +4,9 @@ pragma solidity ^0.5.0;
 
 import 'openzeppelin-solidity/contracts/token/ERC20/IERC20.sol';
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
+import './IFixedPriceTrader.sol';
 
-contract FixedPriceTrader {
+contract FixedPriceTrader is IFixedPriceTrader {
 
     using SafeMath for uint256;
 
@@ -17,7 +18,7 @@ contract FixedPriceTrader {
     	tokenWeiPrice = _tokenWeiPrice;
     }
 
-    function buyTokens() public payable {
+    function buyTokens() external payable {
     	require(msg.value % tokenWeiPrice == 0, "Only exact multiple of token price is accepted.");
 
     	uint256 numTokens = msg.value.div(tokenWeiPrice);
@@ -26,7 +27,7 @@ contract FixedPriceTrader {
     	require(token.transfer(msg.sender, numTokens));
     }
 
-    function sellTokens(uint256 numTokens) public {
+    function sellTokens(uint256 numTokens) external {
     	require(token.transferFrom(msg.sender, address(this), numTokens));
     	msg.sender.transfer(tokenWeiPrice.mul(numTokens));
     }

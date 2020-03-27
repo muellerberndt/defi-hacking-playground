@@ -15,7 +15,7 @@ module.exports = async function(callback) {
 
 	await token.approve(trader1.address, 1000, {from: accounts[0]})
 
-	await trader1.sell(1000)
+	await trader1.sellTokens(1000)
 
 	// Deploy trader 2 with an exchange rate of 200 wei/token
 
@@ -23,11 +23,11 @@ module.exports = async function(callback) {
 
 	console.log("Trader2 deployed at " + trader1.address)
 
-	await trader1.send(web3.utils.toWei("1","ether"))
+	await trader2.send(web3.utils.toWei("1","ether"))
 
-	await token.approve(trader1.address, 1000, {from: accounts[0]})
+	await token.approve(trader2.address, 1000, {from: accounts[0]})
 
-	await trader1.sell(1000)
+	await trader2.sellTokens(1000)
 
     callback()
 	
