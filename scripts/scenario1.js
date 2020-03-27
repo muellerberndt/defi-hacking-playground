@@ -1,19 +1,34 @@
 const JesusCoin = artifacts.require('JesusCoin')
-const MiniSwapExchange = artifacts.require('MiniSwapExchange')
+const FixedPriceTrader = artifacts.require('FixedPriceTrader')
 
 module.exports = async function(callback) {
 
 	let token = await JesusCoin.deployed()
 
-	// Deploy exchange
+	// Deploy trader 1 with an exchange rate of 100 wei/token
 
-	let exchange = await MiniSwapExchange.new(token.address)
+	let trader1 = await FixedPriceTrader.new(token.address, 100)
 
-	await token.approve(exchange1.address, 5000000000, {from: accounts[0]})
+	console.log("Trader1 deployed at " + trader1.address)
 
-	await exchange1.addLiquidity(5000000000,5000000000, {from: accounts[0], value: 5000000000})
+	await trader1.send(web3.utils.toWei("1","ether"))
+
+	await token.approve(trader1.address, 1000, {from: accounts[0]})
+
+	await trader1.sell(1000)
+
+	// Deploy trader 2 with an exchange rate of 200 wei/token
+
+	let trader2 = await FixedPriceTrader.new(token.address, 200)
+
+	console.log("Trader2 deployed at " + trader1.address)
+
+	await trader1.send(web3.utils.toWei("1","ether"))
+
+	await token.approve(trader1.address, 1000, {from: accounts[0]})
+
+	await trader1.sell(1000)
+
+    callback()
 	
-	console.log("Exchange at " + exchange1.address);
-
-    callback();
 }
