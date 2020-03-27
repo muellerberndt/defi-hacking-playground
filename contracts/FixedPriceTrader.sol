@@ -17,17 +17,16 @@ contract FixedPriceTrader {
     	tokenWeiPrice = _tokenWeiPrice;
     }
 
-    function buy() public payable {
-
+    function buyTokens() public payable {
     	require(msg.value % tokenWeiPrice == 0, "Only exact multiple of token price is accepted.");
 
     	uint256 numTokens = msg.value.div(tokenWeiPrice);
 
     	require(numTokens > 0, "Amount of Ether sent is too small.");
-    	require(token.transfer(address(this), numTokens));
+    	require(token.transfer(msg.sender, numTokens));
     }
 
-    function sell(uint256 numTokens) public {
+    function sellTokens(uint256 numTokens) public {
     	require(token.transferFrom(msg.sender, address(this), numTokens));
     	msg.sender.transfer(tokenWeiPrice.mul(numTokens));
     }
