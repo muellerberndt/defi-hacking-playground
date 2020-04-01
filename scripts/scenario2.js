@@ -14,7 +14,7 @@ module.exports = async function(callback) {
 
 	await exchange.addLiquidity(5000000000,5000000000, {from: accounts[0], value: 5000000000})
 	
-	console.log("Exchange at " + exchange1.address)
+	console.log("Exchange at " + exchange.address)
 
 	let loans = await DefiLoans.new(exchange.address, token.address)
 
