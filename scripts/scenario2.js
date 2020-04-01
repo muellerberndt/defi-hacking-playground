@@ -17,6 +17,10 @@ module.exports = async function(callback) {
 	console.log("Exchange at " + exchange1.address)
 
 	let loans = await DefiLoans.new(exchange.address, token.address)
+
+	// Provide some liquidity for loans contract
+
+	await loans.send(web3.utils.toWei("10000","ether"))
 	
     callback()
 }

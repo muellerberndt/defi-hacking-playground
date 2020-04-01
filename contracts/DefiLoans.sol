@@ -52,4 +52,7 @@ contract DefiLoans {
         return (borrower_token_balance >= minCollateral(eth_borrowed));
     }
 
+    function() external payable {
+    }
+
 }
