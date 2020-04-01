@@ -7,7 +7,7 @@ import './IMiniSwapExchange.sol';
 contract MiniSwapExchange is IMiniSwapExchange {
 
     using SafeMath for uint256;
-    
+
     address public token_address;   // address of the IERC20 token traded
     address public token;   // address of the ERC20 token traded
 
@@ -21,7 +21,7 @@ contract MiniSwapExchange is IMiniSwapExchange {
     function tokenAddress() external view returns (address) {
         return token;
     }
-    
+
     /*
     # @notice Deposit ETH and Tokens (self.token) at current ratio to mint MINI tokens.
     # @dev min_liquidity does nothing when total MINI supply is 0.
@@ -31,9 +31,9 @@ contract MiniSwapExchange is IMiniSwapExchange {
 
     function addLiquidity(uint256 min_liquidity, uint256 max_tokens) external payable returns (uint256) {
         require(max_tokens > 0 && msg.value > 0);
-        
+
         uint256 total_liquidity = _totalSupply;
-        
+
         if (total_liquidity > 0) {
             require(min_liquidity > 0);
             uint256 eth_reserve = address(this).balance.sub(msg.value);
@@ -92,7 +92,7 @@ contract MiniSwapExchange is IMiniSwapExchange {
     # @param input_reserve Amount of ETH or Tokens (input type) in exchange reserves.
     # @param output_reserve Amount of ETH or Tokens (output type) in exchange reserves.
     # @return Amount of ETH or Tokens sold.
-    */ 
+    */
 
     function getOutputPrice(uint256 output_amount, uint256 input_reserve, uint256 output_reserve) private pure returns (uint256) {
         require(input_reserve > 0 && output_reserve > 0);
@@ -119,7 +119,7 @@ contract MiniSwapExchange is IMiniSwapExchange {
     function ethToTokenSwapInput(uint256 min_tokens) external payable returns (uint256) {
         return ethToTokenInput(msg.value, min_tokens, msg.sender);
     }
-    
+
     function ethToTokenOutput(uint256 tokens_bought, uint256 max_eth, address payable buyer, address recipient) private returns (uint256) {
         require (tokens_bought > 0 && max_eth > 0);
         uint256 token_reserve = IERC20(token).balanceOf(address(this));
@@ -167,7 +167,7 @@ contract MiniSwapExchange is IMiniSwapExchange {
     function tokenToEthSwapInput(uint256 tokens_sold, uint256 min_eth) external returns (uint256) {
         return tokenToEthInput(tokens_sold, min_eth, msg.sender, msg.sender);
     }
-    
+
     function tokenToEthOutput(uint256 eth_bought, uint256 max_tokens, address buyer, address payable recipient) private returns (uint256) {
         require(eth_bought > 0);
         uint256 token_reserve = IERC20(token).balanceOf(address(this));
@@ -191,7 +191,7 @@ contract MiniSwapExchange is IMiniSwapExchange {
     function tokenToEthSwapOutput(uint256 eth_bought, uint256 max_tokens) external returns (uint256) {
         return tokenToEthOutput(eth_bought, max_tokens, msg.sender, msg.sender);
     }
-    
+
     /*
     # @notice Public price function for ETH to Token trades with an exact input.
     # @param eth_sold Amount of ETH sold.
@@ -203,18 +203,17 @@ contract MiniSwapExchange is IMiniSwapExchange {
         uint256 token_reserve = IERC20(token).balanceOf(address(this));
         return getInputPrice(eth_sold, address(this).balance, token_reserve);
     }
-    
+
     /*
     # @notice Public price function for ETH to Token trades with an exact output.
     # @param tokens_bought Amount of Tokens bought.
     # @return Amount of ETH needed to buy output Tokens.
     */
-    
+
     function getEthToTokenOutputPrice(uint256 tokens_bought) external view returns (uint256) {
         require(tokens_bought > 0);
         uint256 token_reserve = IERC20(token).balanceOf(address(this));
-        uint256 eth_sold = getOutputPrice(tokens_bought, address(this).balance, token_reserve);
-        return eth_sold;
+        return getOutputPrice(tokens_bought, address(this).balance, token_reserve);
     }
 
     /*
@@ -226,8 +225,7 @@ contract MiniSwapExchange is IMiniSwapExchange {
     function getTokenToEthInputPrice(uint256 tokens_sold) external view returns (uint256) {
         require(tokens_sold > 0);
         uint256 token_reserve = IERC20(token).balanceOf(address(this));
-        uint256 eth_bought = getInputPrice(tokens_sold, token_reserve, address(this).balance);
-        return eth_bought;
+        return getInputPrice(tokens_sold, token_reserve, address(this).balance);
     }
 
     /*
@@ -235,20 +233,18 @@ contract MiniSwapExchange is IMiniSwapExchange {
     # @param eth_bought Amount of output ETH.
     # @return Amount of Tokens needed to buy output ETH.
     */
-    
+
     function getTokenToEthOutputPrice(uint256 eth_bought) external view returns (uint256) {
         require(eth_bought > 0);
         uint256 token_reserve = IERC20(token).balanceOf(address(this));
-        getOutputPrice(eth_bought, token_reserve, address(this).balance);
+        return getOutputPrice(eth_bought, token_reserve, address(this).balance);
     }
-    
-
 
     function totalSupply() external view returns (uint256) {
         return _totalSupply;
     }
-        
-    /* 
+
+    /*
     # @notice Convert ETH to Tokens.
     # @dev User specifies exact input (msg.value).
     # @dev User cannot specify minimum output or deadline.
@@ -257,10 +253,10 @@ contract MiniSwapExchange is IMiniSwapExchange {
     function balanceOf(address _owner) external view returns (uint256) {
         return balances[_owner];
     }
-    
-    function () payable external {
+
+    function () external payable  {
         ethToTokenInput(msg.value, 1, msg.sender);
     }
-    
+
 }
 
