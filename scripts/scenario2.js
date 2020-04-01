@@ -1,5 +1,6 @@
 const JesusCoin = artifacts.require('JesusCoin')
 const MiniSwapExchange = artifacts.require('MiniSwapExchange')
+const DefiLoans = artifacts.require('DefiLoans')
 
 module.exports = async function(callback) {
 
@@ -9,12 +10,14 @@ module.exports = async function(callback) {
 
 	let exchange = await MiniSwapExchange.new(token.address)
 
-	await token.approve(exchange1.address, 5000000000, {from: accounts[0]})
+	await token.approve(exchange.address, 5000000000, {from: accounts[0]})
 
-	await exchange1.addLiquidity(5000000000,5000000000, {from: accounts[0], value: 5000000000})
+	await exchange.addLiquidity(5000000000,5000000000, {from: accounts[0], value: 5000000000})
 	
 	console.log("Exchange at " + exchange1.address)
 
+	let loans = await DefiLoans.new(exchange.address, token.address)
+	
     callback()
 }
 

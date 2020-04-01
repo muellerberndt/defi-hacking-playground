@@ -24,11 +24,11 @@ contract FixedPriceTrader is IFixedPriceTrader {
     	uint256 numTokens = msg.value.div(tokenWeiPrice);
 
     	require(numTokens > 0, "Amount of Ether sent is too small.");
-    	require(token.transfer(msg.sender, numTokens));
+    	require(token.transfer(msg.sender, numTokens), "Token transfer to buyer failed.");
     }
 
     function sellTokens(uint256 numTokens) external {
-    	require(token.transferFrom(msg.sender, address(this), numTokens));
+    	require(token.transferFrom(msg.sender, address(this), numTokens), "Token retrieval via transferFrom failed.");
     	msg.sender.transfer(tokenWeiPrice.mul(numTokens));
     }
 
