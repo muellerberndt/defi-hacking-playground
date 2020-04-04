@@ -4,5 +4,7 @@ interface IFixedPriceTrader {
 
     function buyTokens() external payable;
     function sellTokens(uint256 numTokens) external;
+    function getTokenAddress();
+    function getTokenWeiPrice();
 
 }
