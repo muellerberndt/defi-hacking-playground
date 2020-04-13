@@ -11,9 +11,7 @@ module.exports = async function(callback) {
 
 	console.log("Trader1 deployed at " + trader1.address)
 
-	await trader1.send(web3.utils.toWei("1","ether"))
-
-	await token.approve(trader1.address, 10000, {from: accounts[0]})
+	await token.approve(trader1.address, 1000000)
 
 	await trader1.sellTokens(1000)
 
@@ -21,11 +19,11 @@ module.exports = async function(callback) {
 
 	let trader2 = await FixedPriceTraderEZMode.new(token.address, 200)
 
-	console.log("Trader2 deployed at " + trader1.address)
+	console.log("Trader2 deployed at " + trader2.address)
 
-	await trader2.send(web3.utils.toWei("1","ether"))
+	await trader2.send(web3.utils.toWei("100","ether"))
 
-	await token.approve(trader2.address, 10000, {from: accounts[0]})
+	await token.approve(trader2.address, 1000000)
 
 	await trader2.sellTokens(1000)
 
