@@ -11,7 +11,7 @@ module.exports = async function(callback) {
 
 	console.log("Trader1 deployed at " + trader1.address)
 
-	await token.approve(trader1.address, 1000000)
+	await token.approve(trader1.address, 1000000)  // Using "from:" field here appears to cause the script to fail
 
 	await trader1.sellTokens(1000)
 
