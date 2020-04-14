@@ -12,4 +12,9 @@ This is a collection of DeFi legos that can be used to build test scenarios for 
 
 ## Usage
 
-Use [Truffle scripts](https://www.trufflesuite.com/docs/truffle/getting-started/writing-external-scripts) to set up test scenarios.
+Running `truffle migrate` deploys some basic elements:
+
+- The JesusCoin ERC20 token
+- A MiniSwap exchange instance
+
+Use [Truffle scripts](https://www.trufflesuite.com/docs/truffle/getting-started/writing-external-scripts) to add more legos and set up the initial state.
